@@ -149,11 +149,7 @@ def setup(opts):
 command_inputs = {
     "input_prompt" : text, 
     "length" : number(min=20, step=1, description="Output Text Length"),
-    "num_samples" : number(default=1, min=1, step=1, description="Number of samples per prediction"),
-    "temperature" : number(default=1.0, step=1, description="Temperature of output distribution"),
-    "repetition_penalty" : number(default=1.0, step=0.1, max=1.2,description="Repetition penalty for the model"),
-    "top_k" : number(default=0, step=1, description="Top k outputs considered for output"),
-    "top_p" : number(default=0.9, step = 0.1, description="Top p values considered for output"),
+    "temperature" : number(default=1.0, step=0.1, description="Temperature of output distribution")
 }
 
 command_outputs = {"generated_text" : text}
@@ -166,11 +162,11 @@ def generate_text(model_opts, inputs):
     device = model_opts["device"]
 
     length = inputs["length"]
-    num_samples = inputs["num_samples"]
+    num_samples = 1
     temperature = inputs["temperature"]
-    repetition_penalty = inputs["repetition_penalty"]
-    top_k = inputs["top_k"]
-    top_p = inputs["top_p"]
+    repetition_penalty = 1.0
+    top_k = 1
+    top_p = 0.9
     no_cuda = torch.cuda.is_available()
     stop_token = 'None'
     
