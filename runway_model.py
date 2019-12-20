@@ -180,10 +180,10 @@ def generate_text(model_opts, inputs):
     while True:
         
 
-        raw_text = inputs["input_prompt"]
-        
+        input_prompt = inputs["input_prompt"]
+        prompt_text = input_prompt
         # Models with memory likes to have a long prompt for short inputs.
-        raw_text = (PADDING_TEXT) + raw_text
+        raw_text = (PADDING_TEXT) + input_prompt
         context_tokens = tokenizer.encode(raw_text, add_special_tokens=False)
         
         out = sample_sequence(
@@ -204,7 +204,7 @@ def generate_text(model_opts, inputs):
 
         if raw_text:
             break
-    return raw_text + " " + text
+    return prompt_text + " " + text
 
 
 if __name__ == '__main__':
