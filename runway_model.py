@@ -196,6 +196,7 @@ def generate_text(model_opts, inputs):
             repetition_penalty=repetition_penalty,
             device=device,
         )
+        print("Generated!")
         out = out[:, len(context_tokens):].tolist()
         for o in out:
             text = tokenizer.decode(o, clean_up_tokenization_spaces=True)
