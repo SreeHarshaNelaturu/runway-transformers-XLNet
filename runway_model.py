@@ -148,8 +148,9 @@ def setup(opts):
 
 command_inputs = {
     "input_prompt" : text, 
-    "length" : number(default=20, min=20, step=1, max=500, description="Output Text Length"),
-    "temperature" : number(default=1.0, min=0, step=0.1, max=3, description="Temperature of output distribution")
+    "length" : number(default=20, step=5, max=500, description="Output Text Length"),
+    "temperature" : number(default=1.0, min=0, max=3, step=0.01,  description="The high temperature sample displays greater linguistic variety, but the low temperature sample is more grammatically correct. Temperature of 1.0 uses unscaled logits."),
+    "top_p" : number(default=0.9, min=0, max = 1, step=0.01, description="The cumulative probability of token sequences to sample from. Lower values lead to higher quality but less surprising results.")
 }
 
 command_outputs = {"generated_text" : text}
@@ -166,7 +167,7 @@ def generate_text(model_opts, inputs):
     temperature = inputs["temperature"]
     repetition_penalty = 1.0
     top_k = 0
-    top_p = 0.9
+    top_p = inputs["top_p"]
     stop_token = None
     
     if length < 0 and model.config.max_position_embeddings > 0:
